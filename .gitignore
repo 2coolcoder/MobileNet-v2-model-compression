@@ -1,0 +1,15 @@
+# secrets -- never commit
+wandb_api_key.txt
+.netrc
+
+# data & artefacts
+data/
+wandb/
+checkpoints/*.pth
+results/train_stdout.log
+results/*.log
+
+# python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/

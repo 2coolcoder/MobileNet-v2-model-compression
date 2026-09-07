@@ -1,0 +1,6 @@
+# Python 3.12.7 | CUDA 12.8 
+torch==2.9.0
+torchvision==0.24.0
+numpy==1.26.4
+matplotlib==3.11.0
+wandb==0.29.0

@@ -1,0 +1,10 @@
+{
+  "file": "/data/users/cs24s008/Projects/courses/sysDL/A2/checkpoints/mobilenetv2_compressed.bin",
+  "bytes_on_disk": 591093,
+  "mb_on_disk": 0.5637102127075195,
+  "bytes_predicted": 588861.75,
+  "measured_ratio": 15.135905855762122,
+  "accounted_ratio": 15.193257160955012,
+  "accuracy": 95.17,
+  "activation_peak_cr": 4.0
+}
