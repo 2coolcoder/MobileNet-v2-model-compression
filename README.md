@@ -1,8 +1,8 @@
-# CS6886 — Assignment 2: MobileNet-v2 on CIFAR-10 + Custom Model Compression
+# CS6886 - Assignment 2: MobileNet-v2 on CIFAR-10 + Custom Model Compression
 
 Training MobileNet-v2 on CIFAR-10 from scratch, then compressing it with a
 hand-written pipeline: **BatchNorm folding → sensitivity-guided magnitude
-pruning → per-group symmetric weight quantization with MSE-optimal clipping →
+pruning → per-group symmetric weight quantization with min-max clipping →
 log-domain double quantization of the scales → asymmetric activation
 quantization → canonical Huffman/RLE entropy coding**, with byte-exact size
 accounting that charges every metadata field.
@@ -57,7 +57,7 @@ src/
 
 ## Commands
 
-### Q1 — baseline
+### Q1 : baseline
 
 ```bash
 python train.py --epochs 200 --batch_size 128 --lr 0.1 --seed 42 --wandb
@@ -66,7 +66,7 @@ python train.py --epochs 200 --batch_size 128 --lr 0.1 --seed 42 --wandb
 Writes `checkpoints/mobilenetv2_cifar10.pth`, `results/train_log.csv` and
 `results/baseline_summary.json` (per-class accuracy + confusion matrix).
 
-### Q2 — compression at one operating point
+### Q2 : compression at one operating point
 
 ```bash
 # the full method
@@ -75,7 +75,7 @@ python test.py --weight_quant_bits 4 --activation_quant_bits 8 \
                --qat_epochs 12 --layer_table 20
 ```
 
-### Q3 — sweep and the parallel-coordinates chart
+### Q3 : sweep and the parallel-coordinates chart
 
 ```bash
 python sweep.py                  # compute the grid: 108 configs, ~7 min
@@ -105,7 +105,7 @@ the size `src/compression/size.py` predicts, and reloads it to confirm the
 accuracy. On the reported operating point the file is 591,093 bytes against a
 calculated 588,862.
 
-### Q4 — final operating point
+### Q4 : final operating point
 
 ```bash
 python analyze.py --sensitivity --target_sparsity 0.6 --tolerance 1.0
@@ -117,4 +117,9 @@ python analyze.py --figures
 
 ---
 
+## Q5 : Reproducibility and seeds
 
+* A single seed (**42**, `src/config.py:SEED`) drives everything.
+  `src/utils.py:seed_all` seeds `random`, `numpy`, `torch` (CPU and all GPUs)
+  and `PYTHONHASHSEED`; DataLoader shuffling uses an explicitly seeded
+  `torch.Generator` and `worker_init_fn` re-seeds each worker deterministically.
