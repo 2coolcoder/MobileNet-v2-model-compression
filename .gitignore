@@ -5,7 +5,7 @@ wandb_api_key.txt
 # data & artefacts
 data/
 wandb/
-checkpoints/*.pth
+# checkpoints/*.pth
 results/train_stdout.log
 results/*.log
 
